@@ -1,0 +1,13 @@
+# Ignore the following files and directories
+
+# Storage directory for uploaded files
+storage/
+
+# Build output directory
+bin/
+
+# Environment variables file
+.env
+
+# Postman collection files
+*.postman_collection.json
