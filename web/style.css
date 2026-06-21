@@ -789,6 +789,11 @@ body {
   background: #000;
 }
 
+.lightbox__image-wrap audio {
+  width: 100%;
+  max-width: 480px;
+}
+
 /* Close button (top-right) */
 .modal-close {
   position: fixed;

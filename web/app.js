@@ -255,7 +255,11 @@ function createCard(file) {
   const overlay = document.createElement("div");
   overlay.className = "file-card__overlay";
 
-  if (file.category === "images" || file.category === "videos") {
+  if (
+    file.category === "images" ||
+    file.category === "videos" ||
+    file.category === "audio"
+  ) {
     overlay.appendChild(
       createOverlayBtn("visibility", () => Lightbox.open(file)),
     );
@@ -416,7 +420,7 @@ window.addEventListener("scroll", handleScroll, { passive: true });
 // ─── Lightbox ────────────────────────────────────────────────────────────────
 
 const Lightbox = {
-  /** Open the lightbox for an image or video file. */
+  /** Open the lightbox for an image, video, or audio file. */
   open(file) {
     dom.lightboxMedia.innerHTML = "";
 
@@ -430,6 +434,12 @@ const Lightbox = {
       vid.controls = true;
       vid.autoplay = true;
       dom.lightboxMedia.appendChild(vid);
+    } else if (file.category === "audio") {
+      const audio = document.createElement("audio");
+      audio.src = API.fileUrl(file.id);
+      audio.controls = true;
+      audio.autoplay = true;
+      dom.lightboxMedia.appendChild(audio);
     }
 
     dom.lightboxModal.classList.add("open");
