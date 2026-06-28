@@ -7,11 +7,17 @@ import (
 	"net/url"
 	"os"
 
+	"github.com/navjot/storage-service/pkg"
 	"github.com/navjot/storage-service/web"
 )
 
 func main() {
 	slog.SetDefault(slog.New(slog.NewJSONHandler(os.Stdout, nil)))
+
+	if err := pkg.LoadEnv(".env"); err != nil {
+		slog.Error("failed to load .env", "error", err)
+		os.Exit(1)
+	}
 
 	webPort := os.Getenv("WEB_PORT")
 	if webPort == "" {
@@ -20,7 +26,8 @@ func main() {
 
 	apiAddr := os.Getenv("API_URL")
 	if apiAddr == "" {
-		apiAddr = "http://localhost:9000"
+		slog.Error("API_URL is required")
+		os.Exit(1)
 	}
 
 	apiURL, err := url.Parse(apiAddr)
